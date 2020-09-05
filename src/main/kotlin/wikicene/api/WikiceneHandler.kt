@@ -19,7 +19,7 @@ class WikiceneHandler(
         )
 
         response
-            // .putHeader("Access-Control-Allow-Origin", "*")
+            .putHeader("Access-Control-Allow-Origin", "*")
             .putHeader("content-type", "application/json")
             .end(jsonResponse.encode())
     }

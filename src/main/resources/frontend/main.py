@@ -12,14 +12,14 @@ search_bar = document["search-bar"]
 results = document["results"]
 
 result_template = """
-    <a href="{page}" class="list-group-item list-group-item-action text-white mb-3 bg-darker">
-      <div class="d-flex w-100 justify-content-between">
-        <div>
-          <h5 class="mb-2">{title}</h5>
-          <p>{summary}</p>
+    <a href="{page}" class="row justify-content-center text-white mb-3 bg-darker">
+        <div class="col col-8">
+            <h5 class="mb-2">{title}</h5>
+            <p>{summary}</p>
         </div>
-        <img src="{thumbnail}" alt="eevee" class="img-thumbnail">
-      </div>
+        <div class="col col-4">
+            <img src="{thumbnail}" alt="thumbnail" class="bg-transparent">
+        </div>
     </a>
 """
 
