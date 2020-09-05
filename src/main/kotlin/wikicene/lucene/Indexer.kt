@@ -12,7 +12,7 @@ class Indexer(
 
     private val indexConfig: IndexWriterConfig
         get() = IndexWriterConfig(analyzer).apply {
-            openMode = IndexWriterConfig.OpenMode.CREATE
+            openMode = IndexWriterConfig.OpenMode.CREATE_OR_APPEND
         }
 
     fun withWriter(block: IndexWriter.() -> Unit) {
