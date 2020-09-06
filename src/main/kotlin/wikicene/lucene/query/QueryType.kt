@@ -1,11 +1,11 @@
 package wikicene.lucene.query
 
 enum class QueryType {
-    PARSED
-    // TERM,
-    // PREFIX,
-    // WILDCARD,
-    // FUZZY,
+    TERM,
+    PREFIX,
+    WILDCARD,
+    FUZZY,
+    PARSED,
     // PHRASE,
     // BOOLEAN,
     // MATCH_ALL,

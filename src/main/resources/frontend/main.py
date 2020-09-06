@@ -3,11 +3,12 @@ import json
 from browser import ajax, bind, document
 
 # wikicene_url_template = "http://localhost:8080?term={}"
-wikicene_url_template = "/?term={}"
+wikicene_url_template = "/?term={}&queryType={}"
 
 default_debug_message = "Search wikipedia articles!"
 
 debug = document["debug"]
+query_selector = document["query-selector"]
 search_bar = document["search-bar"]
 results = document["results"]
 
@@ -41,21 +42,29 @@ def on_wikicine_response(resp):
     refresh_result_list(articles)
 
 
-def wikicene_request(term):
-    url = wikicene_url_template.format(term)
-    # debug.text = "Requesting '{}'".format(url)
-    req = ajax.Ajax()
-    req.bind("complete", on_wikicine_response)
-    req.open("GET", url, True)
-    req.send()
+def wikicene_request():
+    term = search_bar.value
+    if term:
+        query_type = get_selected_option(query_selector)
+        url = wikicene_url_template.format(term, query_type)
+        req = ajax.Ajax()
+        req.bind("complete", on_wikicine_response)
+        req.open("GET", url, True)
+        req.send()
+    elif results.text:
+        results.clear()
+        debug.text = default_debug_message
+
+
+def get_selected_option(selector):
+    return selector.options[selector.selectedIndex].value
 
 
 @bind(search_bar, "input")
 def on_text_input(ev):
-    term = search_bar.value
-    # debug.text = "Input! term={}".format(term)
-    if term:
-        wikicene_request(term)
-    elif results.text:
-        results.clear()
-        debug.text = default_debug_message
+    wikicene_request()
+
+
+@bind("select", "change")
+def on_query_selector_change(ev):
+    wikicene_request()
