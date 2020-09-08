@@ -1,5 +1,7 @@
 package wikicene
 
+import wikicene.api.WikiceneParams
+import wikicene.lucene.query.QueryType
 import wikicene.model.Article
 import java.net.URI
 import java.time.Instant
@@ -18,4 +20,14 @@ fun buildArticle(
     timestamp = timestamp,
     thumbnail = thumbnail,
     page = page
+)
+
+fun buildParams(
+    term: String,
+    queryType: QueryType,
+    maxEdits: Int? = null
+) = WikiceneParams(
+    term = term,
+    queryType = queryType,
+    maxEdits = maxEdits
 )

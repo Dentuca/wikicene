@@ -69,13 +69,23 @@
       <div class="row justify-content-center my-5">
         <div class="col-2">
           <h5>Query Type</h5>
-          <select id="query-selector" class="selectpicker" data-style="btn-primary rounded-pill">
+          <select id="query-selector" class="selectpicker pr-5" data-style="btn-primary rounded-pill">
             <option selected value="term">Term</option>
             <option value="prefix">Prefix</option>
             <option value="wildcard">Wildcard</option>
             <option value="fuzzy">Fuzzy</option>
             <option value="parsed">Parsed</option>
           </select>
+        </div>
+        <div class="col-2">
+          <div id="max-dist-div" hidden>
+            <h5>Max Edit Dist</h5>
+            <select id="max-dist-selector" class="selectpicker pr-5" data-style="btn-primary rounded-pill">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option selected value="2">2</option>
+            </select>
+          </div>
         </div>
       </div>
 

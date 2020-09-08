@@ -16,8 +16,7 @@ class Searcher(
 
     fun search(params: WikiceneParams): List<Article> {
         val query = WikiceneQueryBuilder(
-            term = params.term,
-            queryType = params.queryType,
+            params = params,
             analyzer = analyzer
         ).build()
 

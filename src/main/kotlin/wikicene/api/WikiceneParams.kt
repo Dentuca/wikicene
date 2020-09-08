@@ -5,7 +5,8 @@ import wikicene.lucene.query.QueryType
 
 class WikiceneParams(
     val term: String,
-    val queryType: QueryType
+    val queryType: QueryType,
+    val maxEdits: Int?
 ) {
 
     companion object {
@@ -17,7 +18,8 @@ class WikiceneParams(
                 term = ctx.getParam(SupportedParam.TERM),
                 queryType = ctx.getNullableParam(SupportedParam.QUERY_TYPE)?.let {
                     QueryType.valueOf(it.toUpperCase())
-                } ?: defaultQuery
+                } ?: defaultQuery,
+                maxEdits = ctx.getNullableParam(SupportedParam.MAX_EDITS)?.toInt()
             )
         }
     }

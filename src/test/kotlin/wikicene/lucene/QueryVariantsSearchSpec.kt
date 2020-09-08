@@ -4,8 +4,8 @@ import org.amshove.kluent.shouldBeEmpty
 import org.amshove.kluent.shouldBeEqualTo
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
-import wikicene.api.WikiceneParams
 import wikicene.buildArticle
+import wikicene.buildParams
 import wikicene.lucene.query.QueryType
 
 object QueryVariantsSearchSpec : Spek ({
@@ -29,7 +29,7 @@ object QueryVariantsSearchSpec : Spek ({
 
                 describe("with term '$term'") {
 
-                    val params = WikiceneParams(
+                    val params = buildParams(
                         term = term,
                         queryType = QueryType.TERM
                     )
@@ -63,7 +63,7 @@ object QueryVariantsSearchSpec : Spek ({
 
                 describe("with term '$term'") {
 
-                    val params = WikiceneParams(
+                    val params = buildParams(
                         term = term,
                         queryType = QueryType.PREFIX
                     )
@@ -96,7 +96,7 @@ object QueryVariantsSearchSpec : Spek ({
 
                 describe("with term '$term'") {
 
-                    val params = WikiceneParams(
+                    val params = buildParams(
                         term = term,
                         queryType = QueryType.WILDCARD
                     )
@@ -118,19 +118,22 @@ object QueryVariantsSearchSpec : Spek ({
 
         describe("using Fuzzy Query") {
 
-            mapOf(
-                "pokemon" to true,
-                "pokéman" to true,
-                "guld" to true,
-                "pokémon" to true,
-                "digimon" to false
-            ).forEach { (term, shouldMatch) ->
+            listOf(
+                FuzzyQueryScenario("pokemon", 0, false),
+                FuzzyQueryScenario("pokemon", 1, true),
+                FuzzyQueryScenario("pokeman", 1, false),
+                FuzzyQueryScenario("pokeman", 2, true),
+                FuzzyQueryScenario("guld", 1, true),
+                FuzzyQueryScenario("pokémon", 1, true),
+                FuzzyQueryScenario("digimon", 1, false)
+            ).forEach { (term, maxEdits, shouldMatch) ->
 
                 describe("with term '$term'") {
 
-                    val params = WikiceneParams(
+                    val params = buildParams(
                         term = term,
-                        queryType = QueryType.FUZZY
+                        queryType = QueryType.FUZZY,
+                        maxEdits = maxEdits
                     )
 
                     val searchResults = searcher.search(params)
@@ -149,3 +152,9 @@ object QueryVariantsSearchSpec : Spek ({
         }
     }
 })
+
+private data class FuzzyQueryScenario(
+    val term: String,
+    val maxEdits: Int,
+    val shouldMatch: Boolean
+)
