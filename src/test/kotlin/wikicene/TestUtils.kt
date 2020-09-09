@@ -1,6 +1,7 @@
 package wikicene
 
 import wikicene.api.WikiceneParams
+import wikicene.lucene.LuceneField
 import wikicene.lucene.query.QueryType
 import wikicene.model.Article
 import java.net.URI
@@ -25,9 +26,11 @@ fun buildArticle(
 fun buildParams(
     term: String,
     queryType: QueryType,
+    queryFields: Set<LuceneField> = setOf(LuceneField.TITLE),
     maxEdits: Int? = null
 ) = WikiceneParams(
     term = term,
     queryType = queryType,
+    queryFields = queryFields,
     maxEdits = maxEdits
 )

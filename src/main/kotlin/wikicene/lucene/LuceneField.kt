@@ -7,7 +7,7 @@ import org.apache.lucene.index.Term
 
 enum class LuceneField(val instance: Field) {
     TITLE(TextField("title", "", Field.Store.YES)),
-    SUMMARY(StoredField("summary", "")),
+    SUMMARY(TextField("summary", "", Field.Store.YES)),
     DESCRIPTION(StoredField("description", "")),
     TIMESTAMP(StoredField("timestamp", "")),
     THUMBNAIL(StoredField("thumbnail", "")),

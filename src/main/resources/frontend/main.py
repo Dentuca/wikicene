@@ -11,6 +11,7 @@ wikicene_url_template = (
 default_debug_message = "Search wikipedia articles!"
 
 debug = document["debug"]
+field_selector = document["field-selector"]
 query_selector = document["query-selector"]
 search_bar = document["search-bar"]
 results = document["results"]
@@ -58,6 +59,10 @@ def wikicene_request():
             query_type=query_type
         )
 
+        # add the fields to use when matching (e.g. title, summary)
+        for field in get_selected_options(field_selector):
+            url += "&queryField={}".format(field)
+
         # add max edit distance parameter for fuzzy queries
         if query_type == "fuzzy":
             max_edit_dist = get_selected_option(max_dist_selector)
@@ -75,6 +80,10 @@ def wikicene_request():
 
 def get_selected_option(selector):
     return selector.options[selector.selectedIndex].value
+
+
+def get_selected_options(selector):
+    return [option.value for option in selector if option.selected]
 
 
 @bind(search_bar, "input")
