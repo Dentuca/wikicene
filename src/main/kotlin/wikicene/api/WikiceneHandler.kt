@@ -3,6 +3,7 @@ package wikicene.api
 import io.vertx.core.http.HttpServerResponse
 import io.vertx.core.json.JsonObject
 import wikicene.lucene.Searcher
+import wikicene.utils.timeIt
 
 class WikiceneHandler(
     val params: WikiceneParams,
@@ -12,14 +13,19 @@ class WikiceneHandler(
 
     fun execute() {
 
+        val (articles, time) = timeIt {
+            searcher.search(params)
+        }
+
         val jsonResponse = JsonObject.mapFrom(
             WikiceneResponse(
-                articles = searcher.search(params)
+                articles = articles,
+                time = time
             )
         )
 
         response
-            .putHeader("Access-Control-Allow-Origin", "*")
+            // .putHeader("Access-Control-Allow-Origin", "*")
             .putHeader("content-type", "application/json")
             .end(jsonResponse.encode())
     }

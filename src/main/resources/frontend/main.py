@@ -1,4 +1,5 @@
 import json
+import time
 
 from browser import ajax, bind, document
 
@@ -30,6 +31,8 @@ result_template = """
     </a>
 """
 
+start_ts = None
+
 
 def build_result(article):
     return result_template.format(**article)
@@ -41,16 +44,25 @@ def refresh_result_list(articles):
 
 
 def on_wikicine_response(resp):
+    latency = int((time.time() - start_ts) * 1000)
     raw_data = resp.text
     data = json.loads(raw_data)
     articles = data["articles"]
-    debug.text = "Got {} results".format(len(articles))
+    debug.text = (
+        "Got {result_count} results in {time} ms"
+        " ({latency} ms roundtrip)"
+    ).format(
+        result_count=len(articles),
+        time=data["time"],
+        latency=latency
+    )
     refresh_result_list(articles)
 
 
 def wikicene_request():
     term = search_bar.value
     if term:
+        global start_ts
 
         # fetch selected options and build url
         query_type = get_selected_option(query_selector)
@@ -72,6 +84,7 @@ def wikicene_request():
         req = ajax.Ajax()
         req.bind("complete", on_wikicine_response)
         req.open("GET", url, True)
+        start_ts = time.time()
         req.send()
     elif results.text:
         results.clear()

@@ -5,3 +5,10 @@ fun timeThis(description: String, block: () -> Unit) {
     block()
     println("$description took ${System.currentTimeMillis() - start} ms")
 }
+
+fun <T> timeIt(block: () -> T): Pair<T, Int> {
+    val start = System.currentTimeMillis()
+    val ret = block()
+    val time = (System.currentTimeMillis() - start).toInt()
+    return Pair(ret, time)
+}
