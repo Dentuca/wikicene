@@ -2,16 +2,21 @@ package wikicene.api
 
 import io.vertx.core.http.HttpServerResponse
 import io.vertx.core.json.JsonObject
-import wikicene.lucene.Searcher
+import wikicene.exception.StoreNotFoundException
+import wikicene.lucene.store.StoreProvider
 import wikicene.utils.timeIt
 
 class WikiceneHandler(
     val params: WikiceneParams,
-    val searcher: Searcher,
-    val response: HttpServerResponse
+    val response: HttpServerResponse,
+    private val stores: StoreProvider
 ) {
 
     fun execute() {
+
+        val searcher = stores.get(params.storeType)?.searcher ?: throw StoreNotFoundException(
+            "store ${params.storeType.name} not found"
+        )
 
         val (articles, time) = timeIt {
             searcher.search(params)

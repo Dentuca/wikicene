@@ -12,6 +12,7 @@ wikicene_url_template = (
 default_debug_message = "Search wikipedia articles!"
 
 debug = document["debug"]
+analyzer_selector = document["analyzer-selector"]
 field_selector = document["field-selector"]
 query_selector = document["query-selector"]
 search_bar = document["search-bar"]
@@ -70,6 +71,10 @@ def wikicene_request():
             term=term,
             query_type=query_type
         )
+
+        # add the analyzers of the index/store to use
+        analyzer_type = get_selected_option(analyzer_selector)
+        url += "&storeType={}".format(analyzer_type)
 
         # add the fields to use when matching (e.g. title, summary)
         for field in get_selected_options(field_selector):

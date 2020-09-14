@@ -4,9 +4,9 @@ import io.vertx.core.AbstractVerticle
 import io.vertx.core.Vertx
 import io.vertx.ext.web.Router
 import wikicene.api.frontend.FrontendHandler
-import wikicene.lucene.Searcher
+import wikicene.lucene.store.StoreProvider
 
-class WikiceneVerticle(private val searcher: Searcher) : AbstractVerticle() {
+class WikiceneVerticle(private val stores: StoreProvider) : AbstractVerticle() {
 
     override fun start() {
 
@@ -17,8 +17,8 @@ class WikiceneVerticle(private val searcher: Searcher) : AbstractVerticle() {
             val params = WikiceneParams.from(routingContext.request())
             WikiceneHandler(
                 params = params,
-                searcher = searcher,
-                response = routingContext.response()
+                response = routingContext.response(),
+                stores = stores
             ).execute()
         }
 

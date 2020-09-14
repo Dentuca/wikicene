@@ -4,6 +4,7 @@ import io.vertx.core.http.HttpServerRequest
 
 enum class SupportedParam(val param: String) {
     TERM("term"),
+    STORE_TYPE("storeType"),
     QUERY_TYPE("queryType"),
     QUERY_FIELD("queryField"),
     MAX_EDITS("maxEdits")
