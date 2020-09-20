@@ -68,14 +68,35 @@
       <!-- OPTIONS -->
       <div class="row justify-content-center my-5">
         <div class="col-2">
-          <h5>Analyzers</h5>
+          <h5>Analyzer</h5>
           <select id="analyzer-selector" class="selectpicker pr-5" data-style="btn-primary rounded-pill">
             <option selected value="standard">Standard</option>
             <option value="keyword">Keyword</option>
+            <option value="custom">Custom</option>
           </select>
         </div>
         <div class="col-2">
-          <h5>Query Field</h5>
+          <div id="tokenizer-div" hidden>
+            <h5>Tokenizer</h5>
+            <select id="tokenizer-selector" class="selectpicker pr-5" data-style="btn-primary rounded-pill">
+              <option selected value="keyword">Keyword</option>
+              <option value="whitespace">Whitespace</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-2">
+          <div id="token-filter-div" hidden>
+            <h5>Token Filters</h5>
+            <select multiple id="token-filter-selector" class="selectpicker pr-5" data-style="btn-primary rounded-pill">
+              <option value="ascii-folding">ASCII Folding</option>
+              <option value="lowercase">Lowercase</option>
+              <option value="english-minimal-stem">English Plural</option>
+              <option value="english-possessive">English Possessive</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-2">
+          <h5>Query Fields</h5>
           <select multiple id="field-selector" class="selectpicker pr-5" data-style="btn-primary rounded-pill">
             <option selected value="title">Title</option>
             <option value="summary">Summary</option>

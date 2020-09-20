@@ -1,5 +1,7 @@
 package wikicene.exception
 
-import java.lang.RuntimeException
+import wikicene.lucene.analysis.AnalyzerId
 
-class StoreNotFoundException(override val message: String?) : RuntimeException()
+class StoreNotFoundException(analyzerId: AnalyzerId) : WikiceneException(
+    "Store not found for analyzer '$analyzerId'"
+)

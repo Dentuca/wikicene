@@ -9,11 +9,11 @@ import org.apache.lucene.search.PrefixQuery
 import org.apache.lucene.search.Query
 import org.apache.lucene.search.TermQuery
 import org.apache.lucene.search.WildcardQuery
-import wikicene.api.WikiceneParams
+import wikicene.api.QueryParams
 import wikicene.lucene.LuceneField
 
 class WikiceneQueryBuilder(
-    private val params: WikiceneParams,
+    private val params: QueryParams,
     private val analyzer: Analyzer
 ) {
 

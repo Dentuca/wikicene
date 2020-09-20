@@ -1,15 +1,17 @@
 package wikicene.lucene.store
 
-class StoreProvider(private val stores: Map<StoreType, Store> = emptyMap()) {
+import wikicene.lucene.analysis.AnalyzerId
+import wikicene.lucene.analysis.AnalyzerProvider
+
+class StoreProvider(stores: List<Store>) {
+
+    private val stores = stores.associateBy { it.analyzerId }
 
     companion object {
-        fun fromStoreTypes() = StoreProvider(
-            StoreType
-                .values()
-                .toList()
-                .associateWith(StoreType::buildMMapStore)
+        internal fun createAllSupportedMMapStores() = StoreProvider(
+            stores = AnalyzerProvider.all().map { MMapStore(analyzerId = it) }
         )
     }
 
-    fun get(storeType: StoreType) = stores[storeType]
+    fun get(analyzerId: AnalyzerId) = stores[analyzerId]
 }

@@ -3,7 +3,7 @@ package wikicene.lucene
 import org.apache.lucene.analysis.Analyzer
 import org.apache.lucene.analysis.standard.StandardAnalyzer
 import org.apache.lucene.store.ByteBuffersDirectory
-import wikicene.api.WikiceneParams
+import wikicene.api.QueryParams
 import wikicene.model.Article
 
 class TestSearcher(
@@ -22,5 +22,5 @@ class TestSearcher(
         }
     }
 
-    fun search(params: WikiceneParams) = searcher.search(params)
+    fun search(params: QueryParams) = searcher.search(params)
 }

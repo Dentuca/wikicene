@@ -14,12 +14,12 @@ class WikiceneHandler(
 
     fun execute() {
 
-        val searcher = stores.get(params.storeType)?.searcher ?: throw StoreNotFoundException(
-            "store ${params.storeType.name} not found"
-        )
+        val analyzerId = params.indexationAnalyzerParams.toAnalyzerId()
+        val store = stores.get(analyzerId) ?: throw StoreNotFoundException(analyzerId)
+        val searcher = store.searcher
 
         val (articles, time) = timeIt {
-            searcher.search(params)
+            searcher.search(params.queryParams)
         }
 
         val jsonResponse = JsonObject.mapFrom(

@@ -1,9 +1,15 @@
 package wikicene
 
+import wikicene.api.IndexationAnalyzerParams
+import wikicene.api.QueryParams
 import wikicene.api.WikiceneParams
+import wikicene.lucene.Indexer
 import wikicene.lucene.LuceneField
+import wikicene.lucene.analysis.SupportedAnalyzerType
+import wikicene.lucene.analysis.SupportedTokenFilter
+import wikicene.lucene.analysis.SupportedTokenizer
 import wikicene.lucene.query.QueryType
-import wikicene.lucene.store.StoreType
+import wikicene.lucene.toLuceneDocument
 import wikicene.model.Article
 import java.net.URI
 import java.time.Instant
@@ -26,14 +32,45 @@ fun buildArticle(
 
 fun buildParams(
     term: String,
-    storeType: StoreType = StoreType.STANDARD,
-    queryType: QueryType,
+    analyzerType: SupportedAnalyzerType = SupportedAnalyzerType.STANDARD,
+    tokenizer: SupportedTokenizer? = null,
+    tokenFilters: List<SupportedTokenFilter> = emptyList(),
+    queryType: QueryType = QueryType.PARSED,
     queryFields: Set<LuceneField> = setOf(LuceneField.TITLE),
     maxEdits: Int? = null
-) = WikiceneParams(
+): WikiceneParams {
+
+    val indexationAnalyzerParams = IndexationAnalyzerParams(
+        analyzerType = analyzerType,
+        tokenizer = tokenizer,
+        tokenFilters = tokenFilters
+    )
+
+    val queryParams = QueryParams(
+        term = term,
+        queryType = queryType,
+        queryFields = queryFields,
+        maxEdits = maxEdits
+    )
+
+    return WikiceneParams(
+        indexationAnalyzerParams = indexationAnalyzerParams,
+        queryParams = queryParams
+    )
+}
+
+fun buildQueryParams(
+    term: String,
+    queryType: QueryType = QueryType.PARSED,
+    queryFields: Set<LuceneField> = setOf(LuceneField.TITLE),
+    maxEdits: Int? = null
+) = QueryParams(
     term = term,
-    storeType = storeType,
     queryType = queryType,
     queryFields = queryFields,
     maxEdits = maxEdits
 )
+
+fun Indexer.addArticles(vararg articles: Article) = withWriter {
+    addDocuments(articles.map(Article::toLuceneDocument))
+}

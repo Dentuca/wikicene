@@ -5,7 +5,7 @@ import org.apache.lucene.index.DirectoryReader
 import org.apache.lucene.search.IndexSearcher
 import org.apache.lucene.search.Query
 import org.apache.lucene.store.Directory
-import wikicene.api.WikiceneParams
+import wikicene.api.QueryParams
 import wikicene.lucene.query.WikiceneQueryBuilder
 import wikicene.model.Article
 
@@ -14,9 +14,9 @@ class Searcher(
     private val analyzer: Analyzer
 ) {
 
-    fun search(params: WikiceneParams): List<Article> {
+    fun search(queryParams: QueryParams): List<Article> {
         val query = WikiceneQueryBuilder(
-            params = params,
+            params = queryParams,
             analyzer = analyzer
         ).build()
 

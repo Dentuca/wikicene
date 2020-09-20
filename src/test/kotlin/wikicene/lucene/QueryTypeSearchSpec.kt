@@ -34,7 +34,7 @@ object QueryVariantsSearchSpec : Spek ({
                         queryType = QueryType.TERM
                     )
 
-                    val searchResults = searcher.search(params)
+                    val searchResults = searcher.search(params.queryParams)
 
                     if (shouldMatch) {
                         it("should have one result") {
@@ -68,7 +68,7 @@ object QueryVariantsSearchSpec : Spek ({
                         queryType = QueryType.PREFIX
                     )
 
-                    val searchResults = searcher.search(params)
+                    val searchResults = searcher.search(params.queryParams)
 
                     if (shouldMatch) {
                         it("should have one result") {
@@ -101,7 +101,7 @@ object QueryVariantsSearchSpec : Spek ({
                         queryType = QueryType.WILDCARD
                     )
 
-                    val searchResults = searcher.search(params)
+                    val searchResults = searcher.search(params.queryParams)
 
                     if (shouldMatch) {
                         it("should have one result") {
@@ -136,7 +136,7 @@ object QueryVariantsSearchSpec : Spek ({
                         maxEdits = maxEdits
                     )
 
-                    val searchResults = searcher.search(params)
+                    val searchResults = searcher.search(params.queryParams)
 
                     if (shouldMatch) {
                         it("should have one result") {

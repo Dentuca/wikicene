@@ -37,7 +37,7 @@ object QueryFieldSearchSpec : Spek({
                         queryFields = setOf(LuceneField.TITLE)
                     )
 
-                    val searchResults = searcher.search(params)
+                    val searchResults = searcher.search(params.queryParams)
 
                     if (shouldMatch) {
                         it("should have one result") {
@@ -68,7 +68,7 @@ object QueryFieldSearchSpec : Spek({
                         queryFields = setOf(LuceneField.SUMMARY)
                     )
 
-                    val searchResults = searcher.search(params)
+                    val searchResults = searcher.search(params.queryParams)
 
                     if (shouldMatch) {
                         it("should have one result") {
@@ -100,7 +100,7 @@ object QueryFieldSearchSpec : Spek({
                         queryFields = setOf(LuceneField.TITLE, LuceneField.SUMMARY)
                     )
 
-                    val searchResults = searcher.search(params)
+                    val searchResults = searcher.search(params.queryParams)
 
                     if (shouldMatch) {
                         it("should have one result") {

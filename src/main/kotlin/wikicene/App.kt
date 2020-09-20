@@ -13,7 +13,7 @@ class App {
         DatabindCodec.mapper().registerKotlinModule()
 
         // build the stores/indexes
-        val storeProvider = StoreProvider.fromStoreTypes()
+        val storeProvider = StoreProvider.createAllSupportedMMapStores()
 
         // start the API
         WikiceneVerticle(storeProvider).start()
