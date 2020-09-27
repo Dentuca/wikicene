@@ -4,7 +4,7 @@ import io.vertx.core.AbstractVerticle
 import io.vertx.core.Vertx
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.Router
-import wikicene.api.frontend.FrontendHandler
+import io.vertx.ext.web.handler.StaticHandler
 import wikicene.lucene.store.StoreProvider
 
 class WikiceneVerticle(private val stores: StoreProvider) : AbstractVerticle() {
@@ -40,19 +40,7 @@ class WikiceneVerticle(private val stores: StoreProvider) : AbstractVerticle() {
                 .end(failureResponse.encode())
         }
 
-        router.route("/frontend").handler { routingContext ->
-            FrontendHandler(
-                file = FrontendHandler.HOME_PAGE_FILE,
-                response = routingContext.response()
-            ).execute()
-        }
-
-        router.route("/frontend/:file").handler { routingContext ->
-            FrontendHandler(
-                file = routingContext.request().getParam("file"),
-                response = routingContext.response()
-            ).execute()
-        }
+        router.route("/frontend*").handler(StaticHandler.create("frontend"))
 
         vertx.createHttpServer()
             .requestHandler(router)
