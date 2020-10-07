@@ -10,5 +10,5 @@ build
 # Ignore Lucene index
 lucene-store/
 
-# Ingore Wikipedia article dump
+# Ignore Wikipedia article dump
 random-articles.dump
