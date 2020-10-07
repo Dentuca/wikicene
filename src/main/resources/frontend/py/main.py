@@ -3,7 +3,6 @@ import time
 
 from browser import ajax, bind, document
 
-# wikicene_url_template = "http://localhost:8080?term={}"
 wikicene_url_template = (
     "/?term={term}"
     "&analyzerType={analyzer_type}"
