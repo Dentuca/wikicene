@@ -42,8 +42,8 @@ dependencies {
     implementation("org.apache.lucene:lucene-analyzers-common:8.6.1")
 
     // spek
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.12")
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.12")
+    testImplementation("org.spekframework.spek2:spek-dsl-jvm:2.0.13")
+    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:2.0.13")
     testRuntimeOnly("org.jetbrains.kotlin:kotlin-reflect")
 
     // kluent
