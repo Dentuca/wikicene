@@ -18,6 +18,7 @@ $ python3 wikirandom.py
 This will begin downloading a random Wikipedia article from
 [this endpoint](https://en.wikipedia.org/api/rest_v1/page/random/summary) each couple of seconds and putting it into
 a `random-articles.dump` text file (this is the file Wikicene will read on start-up).
+You can stop the script with `CTRL+C`.
 The download cadence can be increased, but we want to avoid spamming such a generous endpoint.
 
 After you have your desired amount of articles in the dump (Wikicene can handle tens of thousands easily), you can start
